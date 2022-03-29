@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"codelabs/sources/testable-architecture-with-go/internal/apierr"
 	"database/sql"
 	"encoding/json"
 	"net/http"
@@ -35,7 +36,7 @@ func PostUser(db *sqlx.DB, logger *logrus.Logger) http.HandlerFunc {
 		var user ReqPostUserJSON
 		if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 			logger.Warnf("json decode failed: %+v", err)
-			writeError(w, http.StatusBadRequest, ErrBadRequest)
+			writeError(w, http.StatusBadRequest, apierr.ErrBadRequest)
 			return
 		}
 
